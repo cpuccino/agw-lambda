@@ -12,6 +12,7 @@ API Gateway + Lambda
 - [ ] list all ec2 security groups in an account
     - [ ] list all regions
     - [ ] list all security groups per region
+    - [ ] set up either a database / env that stores aws credentials, or use iam
 - [ ] add tests to services lib
 - [ ] authorizers
 - [ ] access tokens
