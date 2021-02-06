@@ -3,9 +3,9 @@ API Gateway + Lambda
 
 
 ## TODO
-- [ ] tsconfig
-- [ ] packages
-- [ ] service config
+- [x] tsconfig
+- [x] base packages
+- [x] service config
 - [ ] register lambda routes
 - [ ] handlers
 - [ ] response
