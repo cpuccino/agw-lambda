@@ -1,0 +1,8 @@
+{
+  "name": "cc_technical",
+  "author": "cpuccino <thegreatcappuccino@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  }
+}

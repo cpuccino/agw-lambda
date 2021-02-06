@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "CommonJS",
+    "lib": ["dom", "es6", "es2019", "esnext.asynciterable"],
+    "allowJs": false,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "moduleResolution": "node",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "declaration": true
+  },
+  "exclude": ["node_modules", ".vscode"],
+  "typeRoots": ["./node_modules/@types/"]
+}
