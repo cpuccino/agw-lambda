@@ -26,6 +26,11 @@ API Gateway + Lambda
 - [ ] generate test coverage
 - [ ] deploy
 - [ ] set up prettier and eslint
+- [ ] demo instructions
 
 ## References
 [AWS SDK for node!](https://docs.amazonaws.cn/en_us/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html)
+[AWS SDK call limits!](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/throttling.html)
+[IAM Lambda](https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-lambda.html)
+[Authorizer Policies!](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies-examples.html )
+[aws-sdk-js!](https://github.com/aws/aws-sdk-js)

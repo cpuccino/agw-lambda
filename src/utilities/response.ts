@@ -19,6 +19,13 @@ export interface ResponseBody<T> {
   [key: string]: T;
 }
 
+/**
+ * Generates a standardized lambda response
+ * 
+ * @param statusCode 
+ * @param body 
+ * @param headers 
+ */
 export function createResponse<T>(statusCode: StatusCode, body: T, headers: AsyncLambdaResponseHeaders = {}): AsyncLambdaResponse {
   return {
     body: JSON.stringify(body),

@@ -5,7 +5,7 @@ import { verify } from 'jsonwebtoken';
  * role - basic role for the token - [Anonymous, Member, Owner]
  * scopes - comma separated scopes that contains the actions allowed for the issuer ex: "s3:read_only"
  */
-interface UserAccessTokenPayload {
+export interface UserAccessTokenPayload {
   sub: string;
   role?: string;
   scopes?: string;
@@ -18,6 +18,8 @@ interface UserAccessTokenPayload {
  * 
  * If the user data in the db does not match the user data in the token payload,
  * there's a chance the token secret could've been compromised
+ * 
+ * @param accessToken
  */
 export function authenticateToken(accessToken: string): UserAccessTokenPayload | null {
   if(!process.env.ACCESS_TOKEN_SECRET) console.error('No access token secret found');

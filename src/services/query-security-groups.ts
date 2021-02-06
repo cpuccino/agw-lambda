@@ -6,6 +6,8 @@ import { listEC2Instances } from './query-ec2';
 /**
  * "describeSecurityGroups" method only fetches from a single region
  * So we would need to loop through all regions to get all existing security groups
+ * 
+ * @param region 
  */
 export async function listSecurityGroups(region: string): Promise<AWS.EC2.SecurityGroupList> {
   if(!region) return [];
@@ -29,6 +31,8 @@ export async function listSecurityGroups(region: string): Promise<AWS.EC2.Securi
  * 
  * AWS CLI bash script
  * https://gist.github.com/richadams/384020d6e4e6d4f400d7
+ * 
+ * @param region 
  */
 export async function listEC2SecurityGroups(region: string): Promise<AWS.EC2.SecurityGroupList> {
   if(!region) return [];
