@@ -44,4 +44,5 @@ typings
 tsc
 
 # Env
-.env*
+**/.env*
+!**/.env.example
