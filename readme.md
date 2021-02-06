@@ -12,11 +12,11 @@ API Gateway + Lambda
 - [x] credentials
     - [x] aws credentials - dotenv for testing - db or iam for deployment
     - [x] internal - access token validation, secret dotenv
-- [ ] list all ec2 security groups in an account
+- [x] list all ec2 security groups in an account
     - [x] list all regions
     - [x] list all security groups per region
     - [x] set up either a database / env that stores aws credentials, or use iam roles (cloudformation)
-    - [ ] list all ec2 instances and match the security group identifier to the proper security group
+    - [x] list all ec2 instances and match the security group identifier to the proper security group
 - [ ] generate a role using serverless yml cloudformation
 - [ ] add tests to services lib
 - [x] authorizers
