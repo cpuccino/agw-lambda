@@ -9,6 +9,8 @@ provider:
   profile: cc-tech-sls-admin
 
 functions:
+  authorizer:
+    handler: 'src/lambdas/authorizer.handler'
   list-ec2-sg:
     handler: 'src/lambdas/list-ec2-sg.handler'
     events:

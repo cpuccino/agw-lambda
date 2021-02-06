@@ -9,7 +9,9 @@ API Gateway + Lambda
 - [x] register list ec2 sg lambda route
 - [x] response
 - [x] set up iam with read access to ec2
-- [x] set up credentials dotenv for testing - db or iam for deployment
+- [ ] credentials
+    - [x] aws credentials - dotenv for testing - db or iam for deployment
+    - [ ] internal - access token validation
 - [ ] list all ec2 security groups in an account
     - [x] list all regions
     - [x] list all security groups per region
@@ -17,8 +19,8 @@ API Gateway + Lambda
 - [ ] generate a role using serverless yml cloudformation
 - [ ] add tests to services lib
 - [ ] authorizers
-- [ ] access tokens
-- [ ] dotenv for secrets
+    - [x] policy documents
+    - [ ] basic auth flow - token
 - [ ] add tests for authorizers
 - [ ] generate test coverage
 - [ ] deploy
