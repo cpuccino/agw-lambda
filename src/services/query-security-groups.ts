@@ -34,15 +34,19 @@ export async function listEC2SecurityGroups(region: string): Promise<AWS.EC2.Sec
   if(!region) return [];
 
   try {
-    const ec2Instances = await listEC2Instances(region);
+    const [ec2Instances, securityGroups] = await Promise.all([
+      listEC2Instances(region), 
+      listSecurityGroups(region)
+    ]);
     if(!ec2Instances) return [];
 
-    const ec2SecurityGroupsIds = ec2Instances.reduce((ids, instance) => (
-      ids.push(...(instance.SecurityGroups || []).map(sg => (sg.GroupId || '').toLowerCase())
-      ), ids), 
-    [] as string[]).filter(sgId => sgId);
+    const ec2SecurityGroupsIds = ec2Instances.reduce(function(ids, instance) {
+      if(!instance.SecurityGroups || !instance.SecurityGroups.length) return ids;
+      instance.SecurityGroups.forEach(sg => ids.push((sg.GroupId || '').toLowerCase()));
 
-    const securityGroups = await listSecurityGroups(region);
+      return ids;
+    }, [] as string[]).filter(id => id);
+    
     return securityGroups.filter(sg => sg.GroupId && ec2SecurityGroupsIds.includes(sg.GroupId.toLowerCase()));
   } catch(e) {
     console.error(e);
