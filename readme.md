@@ -28,8 +28,8 @@ API Gateway + Lambda
     - [x] basic auth flow - token
     - [x] add tests to token authentication
 - [x] cache expensive handler call - list-ec2-sg
-- [ ] generate test coverage
-- [ ] deploy
+- [x] generate test coverage
+- [x] deploy
 - [ ] set up prettier and eslint
 - [ ] demo instructions
 

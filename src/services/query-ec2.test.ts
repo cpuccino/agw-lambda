@@ -77,6 +77,41 @@ describe('this module lists all EC2 instances in a region', function() {
     expect(await listEC2Instances(region)).toHaveLength(3);
   });
 
+  it('should return an empty list when the api throws an error', async function() {
+    awsMock.mock(ec2Service, describeEC2MethodString, function(callback: Function) {
+      throw new Error('Not Authorized');
+    });
+    expect(await listEC2Instances(region)).toHaveLength(0);
+    expect(async() => await listEC2Instances(region)).not.toThrow();
+  });
+
+  it('should return an empty list when the region is empty', async function() {
+    awsMock.mock(ec2Service, describeEC2MethodString, function(callback: Function) {
+      callback(null, { 
+        Reservations: [
+          {
+            OwnerId: 'random-id',
+            Instances: [
+              generateMockEC2Instance(),
+              generateMockEC2Instance()
+            ]
+          },
+          {
+            OwnerId: 'random-id',
+            Instances: [
+              generateMockEC2Instance()
+            ]
+          },
+          {
+            OwnerId: 'random-id',
+            Instances: null
+          }
+        ] as AWS.EC2.ReservationList
+      });
+    });
+    expect(await listEC2Instances('')).toHaveLength(0);
+  });
+
   afterEach(function() {
     awsMock.restore();
   });

@@ -22,7 +22,6 @@ export interface UserAccessTokenPayload {
  * @param accessToken
  */
 export function authenticateToken(accessToken: string): UserAccessTokenPayload | null {
-  if(!process.env.ACCESS_TOKEN_SECRET) console.error('No access token secret found');
   if(!accessToken || !process.env.ACCESS_TOKEN_SECRET) return null;
   
   try {

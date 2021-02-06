@@ -19,6 +19,7 @@
   },
   "scripts": {
     "test": "jest --verbose",
+    "coverage": "jest --coverage",
     "dev": "NODE_ENV=dev serverless offline start --printOutput",
     "deploy:dev": "serverless deploy --stage dev function --function",
     "deploy:prod": "serverless deploy --stage prod function --function",
