@@ -1,4 +1,4 @@
-service: cc-technical-apw-lambda
+service: cc-technical-agw-lambda
 frameworkVersion: '2'
 
 provider:
