@@ -17,7 +17,7 @@ API Gateway + Lambda
     - [x] list all security groups per region
     - [x] set up either a database / env that stores aws credentials, or use iam roles (cloudformation)
     - [x] list all ec2 instances and match the security group identifier to the proper security group
-- [ ] generate a role using serverless yml cloudformation
+- [x] generate a role using serverless yml cloudformation
 - [ ] add tests to services lib
 - [x] authorizers
     - [x] policy documents

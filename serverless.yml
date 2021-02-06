@@ -12,6 +12,7 @@ functions:
   authorizer:
     handler: 'src/lambdas/authorizer.handler'
   list-ec2-sg:
+    role: EC2FullReadAccessRole # We can either create a role or reference an existing one
     handler: 'src/lambdas/list-ec2-sg.handler'
     memorySize: 1024
     timeout: 30
@@ -31,3 +32,41 @@ plugins:
   - serverless-dotenv-plugin
   - serverless-plugin-typescript
   - serverless-offline
+
+resources:
+  Resources:
+    # https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-lambda.html
+    # Creates an EC2 readonly access role
+    EC2FullReadAccessRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: ${self:service}-${self:provider.stage}-EC2FullReadAccessRole
+        Description: Allows full read access to ec2
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: EC2FullReadAccess
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action: 
+                    # Describe EC2
+                    - ec2:Describe*
+                    - elasticloadbalancing:Describe*
+                    - cloudwatch:GetMetricStatistics
+                    - cloudwatch:ListMetrics
+                    - cloudwatch:Describe*
+                    - autoscaling:Describe*
+                    
+                    # Cloudwatch
+                    - s3:PutObject
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: '*'
