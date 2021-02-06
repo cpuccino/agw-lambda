@@ -1,1 +1,2 @@
 export const AWS_EC2_API_VERSION = '2016-11-15';
+export const AWS_POLICY_DOCUMENT_VERSION = '2012-10-17'

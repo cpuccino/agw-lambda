@@ -1,4 +1,5 @@
 import { PolicyDocument } from 'aws-lambda';
+import { AWS_POLICY_DOCUMENT_VERSION } from '../constants/api';
 
 export interface IGenerateAuthResponseParams {
   principalId: string | null;
@@ -16,13 +17,13 @@ export interface IGeneratePolicyDocument {
  * 
  * @param params
  */
-export async function generatePolicyDocument(params: IGenerateAuthResponseParams): Promise<IGeneratePolicyDocument> {
+export function generatePolicyDocument(params: IGenerateAuthResponseParams): IGeneratePolicyDocument {
   const { principalId, methodArn, effect = 'Deny' } = params;
 
   return {
     principalId,
     policyDocument: {
-      Version: '2012-10-17',
+      Version: AWS_POLICY_DOCUMENT_VERSION,
       Statement: [{
         Action: 'execute-api:Invoke',
         Effect: effect,

@@ -49,7 +49,7 @@ export async function handler(event: APIGatewayTokenAuthorizerEvent, context: Co
   const principalId = userAccessTokenPayload ? userAccessTokenPayload.sub : ANONYMOUS_SUB;
 
   if(type.toLowerCase() !== 'bearer' || !userAccessTokenPayload) {
-    return await generatePolicyDocument({ 
+    return generatePolicyDocument({ 
       principalId, methodArn, effect: 'Deny' 
     });
   }
@@ -61,7 +61,7 @@ export async function handler(event: APIGatewayTokenAuthorizerEvent, context: Co
    * and validate that against the user's or we could offload authorization to the lambda function
    * 
    */
-  return await generatePolicyDocument({ 
+  return generatePolicyDocument({ 
     principalId: userAccessTokenPayload.sub, methodArn, effect: 'Allow' 
   });
 }
