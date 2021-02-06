@@ -14,15 +14,19 @@ API Gateway + Lambda
     - [x] internal - access token validation, secret dotenv
 - [x] list all ec2 security groups in an account
     - [x] list all regions
+    - [x] add tests - list all regions
     - [x] list all security groups per region
-    - [x] set up either a database / env that stores aws credentials, or use iam roles (cloudformation)
+    - [ ] add tests - list all security groups per region
     - [x] list all ec2 instances and match the security group identifier to the proper security group
+    - [ ] add tests - list all ec2 instances
+    - [ ] add tests - match ec2 security group identifier to the proper security group
+    - [x] set up either a database / env that stores aws credentials, or use iam roles (cloudformation)
 - [x] generate a role using serverless yml cloudformation
-- [ ] add tests to services lib
 - [x] authorizers
     - [x] policy documents
+    - [x] add tests to policy documents
     - [x] basic auth flow - token
-- [ ] add tests for authorizers
+    - [x] add tests to token authentication
 - [ ] generate test coverage
 - [ ] deploy
 - [ ] set up prettier and eslint
