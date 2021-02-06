@@ -1,5 +1,6 @@
 import { APIGatewayEvent, Context } from 'aws-lambda';
-import { listEC2SecurityGroups, listRegions } from '../services/list-ec2-sg';
+import { listEC2SecurityGroups } from '../services/query-ec2';
+import { listRegions } from '../services/query-regions';
 import { AsyncLambdaResponse, createResponse } from '../utilities/response';
 
 export async function handler(event: APIGatewayEvent, context: Context): Promise<AsyncLambdaResponse> {
