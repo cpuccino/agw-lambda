@@ -13,7 +13,7 @@ export async function listRegions(): Promise<AWS.EC2.RegionList> {
       ...getAWSCredentials()
     });
     const { Regions: regions } = await ec2.describeRegions().promise();
-    return (regions || []).filter(r => r.RegionName);
+    return (regions || []).filter(r => r && r.RegionName);
   } catch(e) {
     console.error(e);
     return [];

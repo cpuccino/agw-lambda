@@ -1,7 +1,7 @@
 import { APIGatewayTokenAuthorizerEvent, Context } from 'aws-lambda';
 import { ANONYMOUS_SUB } from '../constants/auth';
 import { authenticateToken } from '../services/authenticate-token';
-import { generatePolicyDocument, IGeneratePolicyDocument } from '../services/policy-document';
+import { generatePolicyDocument, GeneratePolicyDocument } from '../services/policy-document';
 
 /**
  * Returns a policy document / authorized response if there's an Authorization Header with a valid bearer token
@@ -41,7 +41,7 @@ import { generatePolicyDocument, IGeneratePolicyDocument } from '../services/pol
  * @param event 
  * @param context 
  */
-export async function handler(event: APIGatewayTokenAuthorizerEvent, context: Context): Promise<IGeneratePolicyDocument> {
+export async function handler(event: APIGatewayTokenAuthorizerEvent, context: Context): Promise<GeneratePolicyDocument> {
   const { authorizationToken = '', methodArn } = event;
   const [type = '', accessToken] = authorizationToken.split(/\s+/);
 

@@ -27,7 +27,7 @@ export async function listEC2Instances(region: string): Promise<AWS.EC2.Instance
       (instances || []).forEach(instance => regionInstances.push(instance));
     }
     
-    return regionInstances;
+    return regionInstances.filter(ec2 => ec2);
   } catch(e) {
     console.error(e);
     return [];

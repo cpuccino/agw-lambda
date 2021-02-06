@@ -1,13 +1,13 @@
 import { PolicyDocument } from 'aws-lambda';
 import { AWS_POLICY_DOCUMENT_VERSION } from '../constants/api';
 
-export interface IGenerateAuthResponseParams {
+export interface GenerateAuthResponseParams {
   principalId: string | null;
   methodArn: string;
   effect?: 'Allow' | 'Deny';
 }
 
-export interface IGeneratePolicyDocument {
+export interface GeneratePolicyDocument {
   principalId: string | null;
   policyDocument: PolicyDocument;
 }
@@ -17,7 +17,7 @@ export interface IGeneratePolicyDocument {
  * 
  * @param params
  */
-export function generatePolicyDocument(params: IGenerateAuthResponseParams): IGeneratePolicyDocument {
+export function generatePolicyDocument(params: GenerateAuthResponseParams): GeneratePolicyDocument {
   const { principalId, methodArn, effect = 'Deny' } = params;
 
   return {
