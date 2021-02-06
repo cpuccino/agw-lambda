@@ -8,7 +8,7 @@ API Gateway + Lambda
 - [x] service config
 - [ ] register lambda routes
 - [ ] handlers
-- [ ] response
+- [x] response
 - [ ] list all ec2's in an account
 - [ ] add tests to services lib
 - [ ] authorizers
