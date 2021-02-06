@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">81.58% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>29/29</span>
+                <span class='fraction'>31/38</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">77.78% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>7/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">77.42% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/22</span>
+                <span class='fraction'>24/31</span>
             </div>
         
             
@@ -112,7 +112,27 @@
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -137,9 +157,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -167,10 +184,32 @@
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import AWS from 'aws-sdk';
 import { AWS_EC2_API_VERSION } from '../constants/api';
 import { getAWSCredentials } from '../utilities/aws-credentials';
 import { listEC2Instances } from './query-ec2';
+import { listRegions } from './query-regions';
 &nbsp;
 /**
  * "describeSecurityGroups" method only fetches from a single region
@@ -196,12 +235,9 @@ export async function listSecurityGroups(region: string): Promise&lt;AWS.EC2.Sec
 }
 &nbsp;
 /**
- * Lists all security groups that's attached to a ec2 instance in a region
+ * Lists all security groups that's attached to an ec2 instance in a region
  * Fetches all EC2 instances and security groups, the matches the instance security group identifier to
  * the security group
- * 
- * AWS CLI bash script
- * https://gist.github.com/richadams/384020d6e4e6d4f400d7
  * 
  * @param region 
  */
@@ -222,6 +258,27 @@ export async function listEC2SecurityGroups(region: string): Promise&lt;AWS.EC2.
   }, [] as string[]).filter(id =&gt; id);
   
   return securityGroups.filter(sg =&gt; sg &amp;&amp; sg.GroupId &amp;&amp; ec2SecurityGroupsIds.includes(sg.GroupId.toLowerCase()));
+}
+&nbsp;
+/**
+ * Lists all security groups that's attached to an ec2 instance for all regions
+ * 
+ * AWS CLI bash script
+ * https://gist.github.com/richadams/384020d6e4e6d4f400d7
+ */
+export async function <span class="fstat-no" title="function not covered" >listAllEC2SecurityGroups(</span>) {
+  const regions = <span class="cstat-no" title="statement not covered" >await listRegions();</span>
+  
+  const ec2RegionsSecurityGroups = <span class="cstat-no" title="statement not covered" >await Promise.all(</span>
+    regions.map(<span class="fstat-no" title="function not covered" >region </span>=&gt; <span class="cstat-no" title="statement not covered" >listEC2SecurityGroups(region.RegionName!))</span>
+  );
+&nbsp;
+  const securityGroups = <span class="cstat-no" title="statement not covered" >[] as AWS.EC2.SecurityGroupList;</span>
+<span class="cstat-no" title="statement not covered" >  for(const ec2RegionSecurityGroup of ec2RegionsSecurityGroups) {</span>
+<span class="cstat-no" title="statement not covered" >    securityGroups.push(...ec2RegionSecurityGroup)</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return securityGroups;</span>
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -229,7 +286,7 @@ export async function listEC2SecurityGroups(region: string): Promise&lt;AWS.EC2.
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun Feb 07 2021 03:56:37 GMT+1100 (Australian Eastern Daylight Time)
+                at Sun Feb 07 2021 04:29:48 GMT+1100 (Australian Eastern Daylight Time)
             </div>
         </div>
         <script src="../prettify.js"></script>
