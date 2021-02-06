@@ -56,7 +56,7 @@ resources:
               Version: '2012-10-17'
               Statement:
                 - Effect: Allow
-                  Action: 
+                  Action:
                     # Describe EC2
                     - ec2:Describe*
                     - elasticloadbalancing:Describe*
@@ -64,7 +64,7 @@ resources:
                     - cloudwatch:ListMetrics
                     - cloudwatch:Describe*
                     - autoscaling:Describe*
-                    
+
                     # Cloudwatch
                     - s3:PutObject
                     - logs:CreateLogStream

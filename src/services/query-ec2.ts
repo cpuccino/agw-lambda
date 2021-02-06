@@ -4,11 +4,11 @@ import { getAWSCredentials } from '../utilities/aws-credentials';
 
 /**
  * Lists all EC2 instances in a region
- * 
- * @param region 
+ *
+ * @param region
  */
 export async function listEC2Instances(region: string): Promise<AWS.EC2.InstanceList> {
-  if(!region) return [];
+  if (!region) return [];
 
   try {
     const ec2 = new AWS.EC2({
@@ -18,17 +18,17 @@ export async function listEC2Instances(region: string): Promise<AWS.EC2.Instance
     });
 
     const { Reservations: reservations } = await ec2.describeInstances().promise();
-    if(!reservations || !reservations.length) return [];
+    if (!reservations || !reservations.length) return [];
 
     const regionInstances = [] as AWS.EC2.InstanceList;
-    for(const reservation of reservations) {
-      if(!reservation) continue;
+    for (const reservation of reservations) {
+      if (!reservation) continue;
       const { Instances: instances } = reservation;
       (instances || []).forEach(instance => regionInstances.push(instance));
     }
-    
+
     return regionInstances.filter(ec2 => ec2);
-  } catch(e) {
+  } catch (e) {
     console.error(e);
     return [];
   }

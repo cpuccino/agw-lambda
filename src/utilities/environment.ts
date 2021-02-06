@@ -1,7 +1,7 @@
 export type Environment = 'dev' | 'prod' | 'staging' | 'test';
 
 export function getNodeEnv(): Environment {
-  switch(process.env.NODE_ENV) {
+  switch (process.env.NODE_ENV) {
     default:
     case 'dev':
     case 'development':

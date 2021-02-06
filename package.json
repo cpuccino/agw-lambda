@@ -30,7 +30,7 @@
     "full-deploy:dev": "serverless deploy --stage dev",
     "full-deploy:prod": "serverless deploy --stage prod",
     "lint": "eslint . --ext .ts",
-    "format": "prettier --write ."
+    "format": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
     "jsonwebtoken": "^8.5.1"

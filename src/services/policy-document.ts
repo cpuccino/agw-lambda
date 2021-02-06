@@ -13,22 +13,26 @@ export interface GeneratePolicyDocument {
 }
 
 /**
- * https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies-examples.html 
- * 
+ * https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies-examples.html
+ *
  * @param params
  */
-export function generatePolicyDocument(params: GenerateAuthResponseParams): GeneratePolicyDocument {
+export function generatePolicyDocument(
+  params: GenerateAuthResponseParams
+): GeneratePolicyDocument {
   const { principalId, methodArn, effect = 'Deny' } = params;
 
   return {
     principalId,
     policyDocument: {
       Version: AWS_POLICY_DOCUMENT_VERSION,
-      Statement: [{
-        Action: 'execute-api:Invoke',
-        Effect: effect,
-        Resource: methodArn
-      }]
+      Statement: [
+        {
+          Action: 'execute-api:Invoke',
+          Effect: effect,
+          Resource: methodArn
+        }
+      ]
     }
   };
 }
