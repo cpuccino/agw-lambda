@@ -6,8 +6,7 @@ API Gateway + Lambda
 - [x] tsconfig
 - [x] base packages
 - [x] service config
-- [ ] register lambda routes
-- [ ] handlers
+- [x] register list ec2 sg lambda route
 - [x] response
 - [ ] list all ec2's in an account
 - [ ] add tests to services lib
@@ -18,3 +17,6 @@ API Gateway + Lambda
 - [ ] generate test coverage
 - [ ] deploy
 - [ ] set up prettier and eslint
+
+## References
+[AWS SDK for node!](https://docs.amazonaws.cn/en_us/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html)
