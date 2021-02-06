@@ -1,13 +1,13 @@
 import { PolicyDocument } from 'aws-lambda';
 
 interface IGenerateAuthResponseParams {
-  principalId: string;
+  principalId: string | null;
   methodArn: string;
   effect?: 'Allow' | 'Deny';
 }
 
 interface IGeneratePolicyDocument {
-  principalId: string;
+  principalId: string | null;
   policyDocument: PolicyDocument;
 }
 
