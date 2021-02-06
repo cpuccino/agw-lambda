@@ -13,8 +13,8 @@ export function getAWSCredentials(): AWS.EC2.ClientConfiguration {
   if(!isLocal()) return {};
   return {
     credentials: {
-      accessKeyId: process.env.ACCESS_KEY_ID!,
-      secretAccessKey: process.env.SECRET_ACCESS_KEY!
+      accessKeyId: process.env.ACCESS_KEY_ID || '',
+      secretAccessKey: process.env.SECRET_ACCESS_KEY || ''
     }
   }
 }

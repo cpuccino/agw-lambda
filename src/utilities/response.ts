@@ -7,7 +7,7 @@ export const DEFAULT_HEADERS = {
 
 export interface AsyncLambdaResponseHeaders { 
   [name: string]: string | boolean 
-};
+}
 
 export interface AsyncLambdaResponse {
   statusCode: StatusCode;

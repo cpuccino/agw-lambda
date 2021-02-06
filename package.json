@@ -6,9 +6,12 @@
     "@types/aws-lambda": "^8.10.71",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^14.14.25",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
+    "@typescript-eslint/parser": "^4.14.2",
     "aws-sdk": "^2.839.0",
     "aws-sdk-mock": "^5.1.0",
     "dotenv": "^8.2.0",
+    "eslint": "^7.19.0",
     "jest": "^26.6.3",
     "serverless-dotenv-plugin": "^3.1.0",
     "serverless-offline": "5.12.1",
@@ -24,7 +27,8 @@
     "deploy:dev": "serverless deploy --stage dev function --function",
     "deploy:prod": "serverless deploy --stage prod function --function",
     "full-deploy:dev": "serverless deploy --stage dev",
-    "full-deploy:prod": "serverless deploy --stage prod"
+    "full-deploy:prod": "serverless deploy --stage prod",
+    "lint": "eslint . --ext .ts"
   },
   "dependencies": {
     "jsonwebtoken": "^8.5.1"

@@ -1,5 +1,9 @@
 import AWS from 'aws-sdk';
 
+export type DescribeSecurityGroupsCallback = (err?: AWS.AWSError | null, data?: AWS.EC2.Types.DescribeSecurityGroupsResult) => void;
+export type DescribeRegionsCallback = (err?: AWS.AWSError | null, data?: AWS.EC2.Types.DescribeRegionsResult) => void;
+export type DescribeInstanceCallback = (err?: AWS.AWSError | null, data?: AWS.EC2.Types.DescribeInstancesResult) => void;
+
 export function generateMockRegions() : AWS.EC2.RegionList {
   const regionNames = [
     'eu-north-1', 'ap-south-1', 'eu-west-3', 'eu-west-2', 'eu-west-1', 
@@ -40,7 +44,7 @@ export function generateMockSecurityGroup(groupId = 'Default SG'): AWS.EC2.Secur
   };
 }
 
-export function generateMockSecurityGroupIdentifier(identifier: string) {
+export function generateMockSecurityGroupIdentifier(identifier: string): AWS.EC2.SecurityGroupIdentifier {
   return { 
     GroupName: identifier, GroupId: identifier
   };

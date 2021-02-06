@@ -14,14 +14,14 @@ describe('This module performs authentication to the access token and decodes th
   };
 
   it('should return null if the sub is empty', async function() {
-    const token = sign({ ...userPayload, sub: '' }, process.env.ACCESS_TOKEN_SECRET!);
+    const token = sign({ ...userPayload, sub: '' }, process.env.ACCESS_TOKEN_SECRET || '');
     const decoded = authenticateToken(token);
 
     expect(decoded).toBeNull();
   });
 
   it('should contain the sub, role?, and scopes?', async function() {
-    const token = sign({ ...userPayload }, process.env.ACCESS_TOKEN_SECRET!);
+    const token = sign({ ...userPayload }, process.env.ACCESS_TOKEN_SECRET || '');
     const decoded = authenticateToken(token);
 
     expect(decoded).toEqual(expect.objectContaining({
@@ -36,7 +36,7 @@ describe('This module performs authentication to the access token and decodes th
     expect(authenticateToken('')).toBeNull();
     expect(authenticateToken('123456789')).toBeNull();
 
-    const token = sign({ ...userPayload }, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: '0' });
+    const token = sign({ ...userPayload }, process.env.ACCESS_TOKEN_SECRET || '', { expiresIn: '0' });
     await new Promise(res => setTimeout(res, 10));
     expect(authenticateToken(token)).toBeNull();
   });

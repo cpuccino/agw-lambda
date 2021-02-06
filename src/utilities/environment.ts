@@ -18,10 +18,10 @@ export function getNodeEnv(): Environment {
   }
 }
 
-export function isProduction() {
+export function isProduction(): boolean {
   return getNodeEnv() === 'prod';
 }
 
-export function isLocal() {
+export function isLocal(): boolean {
   return process.env.LOCAL === 'true';
 }

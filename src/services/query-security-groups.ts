@@ -59,11 +59,11 @@ export async function listEC2SecurityGroups(region: string): Promise<AWS.EC2.Sec
  * AWS CLI bash script
  * https://gist.github.com/richadams/384020d6e4e6d4f400d7
  */
-export async function listAllEC2SecurityGroups() {
+export async function listAllEC2SecurityGroups(): Promise<AWS.EC2.SecurityGroupList> {
   const regions = await listRegions();
   
   const ec2RegionsSecurityGroups = await Promise.all(
-    regions.map(region => listEC2SecurityGroups(region.RegionName!))
+    regions.map(region => listEC2SecurityGroups(region.RegionName || ''))
   );
 
   const securityGroups = [] as AWS.EC2.SecurityGroupList;

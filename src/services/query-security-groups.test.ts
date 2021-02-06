@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
 import awsMock from 'aws-sdk-mock';
-import { generateMockSecurityGroup, generateMockEC2Instance, generateMockSecurityGroupIdentifier } from '../utilities/aws-mock-utilities';
+import { generateMockSecurityGroup, generateMockEC2Instance, generateMockSecurityGroupIdentifier, DescribeSecurityGroupsCallback, DescribeInstanceCallback } from '../utilities/aws-mock-utilities';
 import { listEC2SecurityGroups, listSecurityGroups } from './query-security-groups';
 
 describe('this module lists all security groups in a region', function() {
@@ -14,33 +14,28 @@ describe('this module lists all security groups in a region', function() {
   });
 
   it('should return an empty list when there\'s no "SecurityGroups" key', async function() {
-    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
+    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: DescribeSecurityGroupsCallback) {
       callback(null, {});
     });
     expect(await listSecurityGroups(region)).toHaveLength(0);
   });
 
   it('should return an empty list if "SecurityGroups" array is empty / only has null values', async function() {
-    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
+    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: DescribeSecurityGroupsCallback) {
       callback(null, { SecurityGroups: [] });
-    });
-    expect(await listSecurityGroups(region)).toHaveLength(0);
-
-    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
-      callback(null, { SecurityGroups: [null] });
     });
     expect(await listSecurityGroups(region)).toHaveLength(0);
   });
 
   it('should return 5 security groups as per the config', async function() {
-    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
-      callback(null, { SecurityGroups: Array(5).fill(0).map(_ => generateMockSecurityGroup) });
+    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: DescribeSecurityGroupsCallback) {
+      callback(null, { SecurityGroups: Array(5).fill(0).map(_ => generateMockSecurityGroup) as AWS.EC2.SecurityGroupList });
     });
     expect(await listSecurityGroups(region)).toHaveLength(5);
   });
 
   it('should return an empty list when the api throws an error', async function() {
-    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
+    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: DescribeSecurityGroupsCallback) {
       throw new Error('Not Authorized');
     });
     expect(await listSecurityGroups(region)).toHaveLength(0);
@@ -48,8 +43,8 @@ describe('this module lists all security groups in a region', function() {
   });
 
   it('should return an empty list when the region is empty', async function() {
-    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
-      callback(null, { SecurityGroups: Array(5).fill(0).map(_ => generateMockSecurityGroup) });
+    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: DescribeSecurityGroupsCallback) {
+      callback(null, { SecurityGroups: Array(5).fill(0).map(_ => generateMockSecurityGroup) as AWS.EC2.SecurityGroupList });
     });
     expect(await listSecurityGroups('')).toHaveLength(0);
   });
@@ -72,17 +67,17 @@ describe('this module lists all security groups in a region that\'s attached to 
   const describeEC2MethodString = 'describeInstances';
 
   it('should return an empty list when there are no EC2 instances found', async function() {
-    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
+    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: DescribeSecurityGroupsCallback) {
       callback(null, {});
     });
-    awsMock.mock(ec2Service, describeEC2MethodString, function(callback: Function) {
+    awsMock.mock(ec2Service, describeEC2MethodString, function(callback: DescribeInstanceCallback) {
       callback(null, {});
     });
     expect(await listEC2SecurityGroups(region)).toHaveLength(0);
   });
 
   it('should return an empty list when there are no Security groups or no EC2 instances found', async function() {
-    awsMock.mock(ec2Service, describeEC2MethodString, function(callback: Function) {
+    awsMock.mock(ec2Service, describeEC2MethodString, function(callback: DescribeInstanceCallback) {
       callback(null, { 
         Reservations: [
           {
@@ -98,15 +93,15 @@ describe('this module lists all security groups in a region that\'s attached to 
         ] as AWS.EC2.ReservationList
       });
     });
-    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
+    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: DescribeSecurityGroupsCallback) {
       callback(null, {});
     });
     expect(await listEC2SecurityGroups(region)).toHaveLength(0);
 
-    awsMock.remock(ec2Service, describeEC2MethodString, function(callback: Function) {
+    awsMock.remock(ec2Service, describeEC2MethodString, function(callback: DescribeInstanceCallback) {
       callback(null, {});
     });
-    awsMock.remock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
+    awsMock.remock(ec2Service, describeSecurityGroupMethodString, function(callback: DescribeSecurityGroupsCallback) {
       callback(null, { 
         SecurityGroups: [
           generateMockSecurityGroup()
@@ -117,7 +112,7 @@ describe('this module lists all security groups in a region that\'s attached to 
   });
 
   it('should return an empty list when all EC2 instances have no attached security group', async function() {
-    awsMock.mock(ec2Service, describeEC2MethodString, function(callback: Function) {
+    awsMock.mock(ec2Service, describeEC2MethodString, function(callback: DescribeInstanceCallback) {
       callback(null, { 
         Reservations: [
           {
@@ -131,7 +126,7 @@ describe('this module lists all security groups in a region that\'s attached to 
         ] as AWS.EC2.ReservationList
       });
     });
-    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
+    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: DescribeSecurityGroupsCallback) {
       callback(null, { 
         SecurityGroups: [
           generateMockSecurityGroup('Default SG')
@@ -143,7 +138,7 @@ describe('this module lists all security groups in a region that\'s attached to 
   });
 
   it('should only return security groups attached to an EC2 instance (securityGroupIdentifiier should have a match)', async function() {
-    awsMock.mock(ec2Service, describeEC2MethodString, function(callback: Function) {
+    awsMock.mock(ec2Service, describeEC2MethodString, function(callback: DescribeInstanceCallback) {
       callback(null, { 
         Reservations: [
           {
@@ -187,7 +182,7 @@ describe('this module lists all security groups in a region that\'s attached to 
         ] as AWS.EC2.ReservationList
       });
     });
-    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
+    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: DescribeSecurityGroupsCallback) {
       callback(null, { 
         SecurityGroups: [
           generateMockSecurityGroup('Default SG 1'),
@@ -203,7 +198,7 @@ describe('this module lists all security groups in a region that\'s attached to 
   });
 
   it('should return an empty list when the region is empty', async function() {
-    awsMock.mock(ec2Service, describeEC2MethodString, function(callback: Function) {
+    awsMock.mock(ec2Service, describeEC2MethodString, function(callback: DescribeInstanceCallback) {
       callback(null, { 
         Reservations: [
           {
@@ -243,7 +238,7 @@ describe('this module lists all security groups in a region that\'s attached to 
         ] as AWS.EC2.ReservationList
       });
     });
-    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
+    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: DescribeSecurityGroupsCallback) {
       callback(null, { 
         SecurityGroups: [
           generateMockSecurityGroup('Default SG 1'),
