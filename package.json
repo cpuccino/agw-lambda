@@ -4,6 +4,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.71",
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^14.14.25",
     "aws-sdk": "^2.839.0",
     "dotenv": "^8.2.0",
@@ -22,5 +23,8 @@
     "deploy:prod": "serverless deploy --stage prod function --function",
     "full-deploy:dev": "serverless deploy --stage dev",
     "full-deploy:prod": "serverless deploy --stage prod"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
   }
 }
