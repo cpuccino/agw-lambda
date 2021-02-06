@@ -27,7 +27,7 @@ API Gateway + Lambda
     - [x] add tests to policy documents
     - [x] basic auth flow - token
     - [x] add tests to token authentication
-- [ ] cache expensive handler call - list-ec2-sg
+- [x] cache expensive handler call - list-ec2-sg
 - [ ] generate test coverage
 - [ ] deploy
 - [ ] set up prettier and eslint
