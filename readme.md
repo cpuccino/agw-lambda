@@ -8,7 +8,10 @@ API Gateway + Lambda
 - [x] service config
 - [x] register list ec2 sg lambda route
 - [x] response
-- [ ] list all ec2's in an account
+- [x] set up iam with read access to ec2
+- [ ] list all ec2 security groups in an account
+    - [ ] list all regions
+    - [ ] list all security groups per region
 - [ ] add tests to services lib
 - [ ] authorizers
 - [ ] access tokens
