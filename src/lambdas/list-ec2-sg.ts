@@ -22,7 +22,7 @@ let cachedEC2SecurityGroups: CachedEC2SecurityGroups | null;
  * @param context 
  */
 export async function handler(event: APIGatewayEvent, context: Context): Promise<AsyncLambdaResponse> {
-  if(cachedEC2SecurityGroups && cachedEC2SecurityGroups.expiresIn < new Date().getTime()) {
+  if(cachedEC2SecurityGroups && cachedEC2SecurityGroups.expiresIn > new Date().getTime()) {
     return createResponse(200, { data: cachedEC2SecurityGroups }, { 
       'Expires-In': cachedEC2SecurityGroups.expiresIn.toString() 
     });
