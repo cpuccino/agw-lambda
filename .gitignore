@@ -46,3 +46,5 @@ tsc
 # Env
 **/.env*
 !**/.env.example
+
+.DS_Store

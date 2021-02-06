@@ -39,23 +39,18 @@ export async function listSecurityGroups(region: string): Promise<AWS.EC2.Securi
 export async function listEC2SecurityGroups(region: string): Promise<AWS.EC2.SecurityGroupList> {
   if(!region) return [];
 
-  try {
-    const [ec2Instances, securityGroups] = await Promise.all([
-      listEC2Instances(region), 
-      listSecurityGroups(region)
-    ]);
-    if(!ec2Instances) return [];
+  const [ec2Instances, securityGroups] = await Promise.all([
+    listEC2Instances(region), 
+    listSecurityGroups(region)
+  ]);
+  if(!ec2Instances || !ec2Instances.length) return [];
 
-    const ec2SecurityGroupsIds = ec2Instances.reduce(function(ids, instance) {
-      if(!instance.SecurityGroups || !instance.SecurityGroups.length) return ids;
-      instance.SecurityGroups.forEach(sg => ids.push((sg.GroupId || '').toLowerCase()));
+  const ec2SecurityGroupsIds = ec2Instances.reduce(function(ids, instance) {
+    if(!instance.SecurityGroups || !instance.SecurityGroups.length) return ids;
+    instance.SecurityGroups.forEach(sg => ids.push((sg.GroupId || '').toLowerCase()));
 
-      return ids;
-    }, [] as string[]).filter(id => id);
-    
-    return securityGroups.filter(sg => sg && sg.GroupId && ec2SecurityGroupsIds.includes(sg.GroupId.toLowerCase()));
-  } catch(e) {
-    console.error(e);
-    return [];
-  }
+    return ids;
+  }, [] as string[]).filter(id => id);
+  
+  return securityGroups.filter(sg => sg && sg.GroupId && ec2SecurityGroupsIds.includes(sg.GroupId.toLowerCase()));
 }

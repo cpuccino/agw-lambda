@@ -109,7 +109,7 @@ describe('this module lists all security groups in a region that\'s attached to 
     awsMock.remock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
       callback(null, { 
         SecurityGroups: [
-          generateMockSecurityGroup('Default SG')
+          generateMockSecurityGroup()
         ] 
       });
     });
@@ -143,6 +143,66 @@ describe('this module lists all security groups in a region that\'s attached to 
   });
 
   it('should only return security groups attached to an EC2 instance (securityGroupIdentifiier should have a match)', async function() {
+    awsMock.mock(ec2Service, describeEC2MethodString, function(callback: Function) {
+      callback(null, { 
+        Reservations: [
+          {
+            OwnerId: 'random-ownerid',
+            Instances: [
+              generateMockEC2Instance({
+                SecurityGroups: [
+                  generateMockSecurityGroupIdentifier('Default SG 1'),
+                  generateMockSecurityGroupIdentifier('Default SG 2'),
+                  {
+                    ...generateMockSecurityGroupIdentifier('Default SG 2'),
+                    GroupId: ''
+                  }
+                ]
+              })
+            ]
+          },
+          {
+            OwnerId: 'random-ownerid',
+            Instances: [
+              generateMockEC2Instance({
+                SecurityGroups: [
+                  generateMockSecurityGroupIdentifier('Default SG 2'),
+                  generateMockSecurityGroupIdentifier('Default SG 3')
+                ]
+              }),
+              generateMockEC2Instance({
+                SecurityGroups: [
+                  generateMockSecurityGroupIdentifier('Default SG 5'),
+                ]
+              }),
+              generateMockEC2Instance({
+                SecurityGroups: []
+              })
+            ]
+          },
+          {
+            OwnerId: 'random-ownerid',
+            Instances: []
+          }
+        ] as AWS.EC2.ReservationList
+      });
+    });
+    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
+      callback(null, { 
+        SecurityGroups: [
+          generateMockSecurityGroup('Default SG 1'),
+          generateMockSecurityGroup('Default SG 2'),
+          generateMockSecurityGroup('Default SG 3'),
+          generateMockSecurityGroup('Default SG 4'),
+          generateMockSecurityGroup('Default SG 5')
+        ] 
+      });
+    });
+
+    expect(await listEC2SecurityGroups(region)).toHaveLength(4);
+  });
+
+  it('should return an empty list when the region is empty', async function() {
     awsMock.mock(ec2Service, describeEC2MethodString, function(callback: Function) {
       callback(null, { 
         Reservations: [
@@ -194,8 +254,7 @@ describe('this module lists all security groups in a region that\'s attached to 
         ] 
       });
     });
-
-    expect(await listEC2SecurityGroups(region)).toHaveLength(4);
+    expect(await listEC2SecurityGroups('')).toHaveLength(0);
   });
 
   afterEach(function() {

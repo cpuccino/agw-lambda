@@ -28,7 +28,7 @@ describe('This module performs authentication to the access token and decodes th
       sub: '0',
       role: 'MEMBER',
       scopes: 's3:read_only'
-    }))
+    }));
   });
 
   it('should return null if the token is invalid', async function() {
