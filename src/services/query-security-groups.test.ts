@@ -20,9 +20,14 @@ describe('this module lists all security groups in a region', function() {
     expect(await listSecurityGroups(region)).toHaveLength(0);
   });
 
-  it('should return an empty list if "SecurityGroups" array is empty', async function() {
+  it('should return an empty list if "SecurityGroups" array is empty / only has null values', async function() {
     awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
       callback(null, { SecurityGroups: [] });
+    });
+    expect(await listSecurityGroups(region)).toHaveLength(0);
+
+    awsMock.mock(ec2Service, describeSecurityGroupMethodString, function(callback: Function) {
+      callback(null, { SecurityGroups: [null] });
     });
     expect(await listSecurityGroups(region)).toHaveLength(0);
   });

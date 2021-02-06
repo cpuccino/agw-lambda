@@ -19,9 +19,14 @@ describe('this module lists all regions', function() {
     expect(await listRegions()).toHaveLength(0);
   });
 
-  it('should return an empty list if "Regions" array is empty', async function() {
+  it('should return an empty list if "Regions" array is empty / only has null values', async function() {
     awsMock.mock(ec2Service, describeRegionMethodString, function(callback: Function) {
       callback(null, { Regions: [] });
+    });
+    expect(await listRegions()).toHaveLength(0);
+
+    awsMock.remock(ec2Service, describeRegionMethodString, function(callback: Function) {
+      callback(null, { Regions: [null] });
     });
     expect(await listRegions()).toHaveLength(0);
   });
