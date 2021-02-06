@@ -16,7 +16,7 @@ https://kp85unh7m0.execute-api.ap-southeast-2.amazonaws.com/prod/list-ec2-sg
 }
 ```
 
-- Make a request to the endpoint and add the following headers
+- Make a request to the [GET] endpoint and add the following headers
 
 ```
 Authorization: Bearer {{ACCESS_TOKEN}}
