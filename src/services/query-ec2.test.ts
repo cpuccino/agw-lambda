@@ -3,7 +3,7 @@ import awsMock from 'aws-sdk-mock';
 import { listEC2Instances } from './query-ec2';
 import { generateMockEC2Instance } from '../utilities/aws-mock-utilities';
 
-describe('this module lists all ec2 instances in a region', function() {
+describe('this module lists all EC2 instances in a region', function() {
 
   const region = 'ap-southeast-2';
   const ec2Service = 'EC2';

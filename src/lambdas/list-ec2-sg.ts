@@ -7,7 +7,7 @@ import { AsyncLambdaResponse, createResponse } from '../utilities/response';
  * Lists all security groups attached to an EC2 instance for all regions
  * 
  * For production, we can further improve the performance of our describe:* calls to the aws api
- * by caching the response in a database / data store
+ * by caching the response in a database / data store / memory
  * 
  * @param event 
  * @param context 

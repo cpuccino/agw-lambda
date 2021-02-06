@@ -40,6 +40,12 @@ export function generateMockSecurityGroup(groupId = 'Default SG'): AWS.EC2.Secur
   };
 }
 
+export function generateMockSecurityGroupIdentifier(identifier: string) {
+  return { 
+    GroupName: identifier, GroupId: identifier
+  };
+}
+
 export function generateMockEC2Instance(override: Partial<AWS.EC2.Instance> = {}): AWS.EC2.Instance {
   return {
     AmiLaunchIndex: 0,

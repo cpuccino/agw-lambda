@@ -19,7 +19,7 @@ API Gateway + Lambda
     - [x] add tests - list all security groups per region
     - [x] list all ec2 instances and match the security group identifier to the proper security group
     - [x] add tests - list all ec2 instances
-    - [ ] add tests - match ec2 security group identifier to the proper security group
+    - [x] add tests - match ec2 security group identifier to the proper security group
     - [x] set up either a database / env that stores aws credentials, or use iam roles (cloudformation)
 - [x] generate a role using serverless yml cloudformation
 - [x] authorizers
@@ -27,6 +27,7 @@ API Gateway + Lambda
     - [x] add tests to policy documents
     - [x] basic auth flow - token
     - [x] add tests to token authentication
+- [ ] cache expensive handler call - list-ec2-sg
 - [ ] generate test coverage
 - [ ] deploy
 - [ ] set up prettier and eslint
