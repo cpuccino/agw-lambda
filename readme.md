@@ -13,6 +13,7 @@ API Gateway + Lambda
 - [ ] add tests to services lib
 - [ ] authorizers
 - [ ] access tokens
+- [ ] dotenv for secrets
 - [ ] add tests for authorizers
 - [ ] generate test coverage
 - [ ] deploy
