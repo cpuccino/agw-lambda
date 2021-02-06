@@ -1,6 +1,23 @@
 # Trend Micro - Cloud Conformity Technical Interview
 API Gateway + Lambda
 
+## Demo
+https://kp85unh7m0.execute-api.ap-southeast-2.amazonaws.com/prod/list-ec2-sg
+
+- Generate a jwt access token with the following payload and using the secret `secret`
+```
+{
+  "sub": "1234567890",
+  "roles": "",
+  "scopes": ""
+}
+```
+- Make a request to the endpoint and add the following headers
+```
+Authorization: Bearer {{ACCESS_TOKEN}}
+```
+- The data will be cached for 15s
+
 
 ## TODO
 - [x] tsconfig
@@ -34,8 +51,9 @@ API Gateway + Lambda
 - [ ] demo instructions
 
 ## References
-[AWS SDK for node!](https://docs.amazonaws.cn/en_us/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html)
-[AWS SDK call limits!](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/throttling.html)
-[IAM Lambda](https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-lambda.html)
-[Authorizer Policies!](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies-examples.html )
-[aws-sdk-js!](https://github.com/aws/aws-sdk-js)
+- [Getting started with the AWS SDK](https://docs.amazonaws.cn/en_us/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html)
+- [AWS SDK for node](https://github.com/aws/aws-sdk-js)
+- [AWS SDK call limits](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/throttling.html)
+- [IAM Lambda](https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-lambda.html)
+- [Authorizer Policies](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies-examples.html )
+- [Mocking AWS SDK](https://github.com/dwyl/aws-sdk-mock)
