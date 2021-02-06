@@ -3,12 +3,16 @@ import { generatePolicyDocument } from '../services/policy-document';
 import { createResponse } from '../utilities/response';
 
 export async function handler(event: APIGatewayTokenAuthorizerEvent, context: Context): Promise<any> {
-  const { authorizationToken, methodArn } = event;
+  const { authorizationToken = '', methodArn } = event;
   const [type = '', accessToken] = authorizationToken.split(/\s+/);
 
   if(type.toLowerCase() !== 'bearer') {
-    return createResponse(400, await generatePolicyDocument({ methodArn, effect: 'Deny' }));
+    return await generatePolicyDocument({ 
+      principalId: 'xx', methodArn, effect: 'Deny' 
+    });
   }
 
-  return createResponse(200, await generatePolicyDocument({ methodArn, effect: 'Allow' }));
+  return await generatePolicyDocument({ 
+    principalId: 'xx', methodArn, effect: 'Allow' 
+  });
 }

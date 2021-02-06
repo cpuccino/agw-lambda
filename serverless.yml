@@ -1,4 +1,4 @@
-service: cc-technical-agw-lambda
+service: cc-tech-agw-lambda
 frameworkVersion: '2'
 
 provider:
@@ -13,11 +13,14 @@ functions:
     handler: 'src/lambdas/authorizer.handler'
   list-ec2-sg:
     handler: 'src/lambdas/list-ec2-sg.handler'
+    memorySize: 1024
+    timeout: 30
     events:
       - http:
           method: GET
           path: '/list-ec2-sg'
           cors: true
+          authorizer: authorizer
 
 custom:
   defaultRegion: ap-southeast-2

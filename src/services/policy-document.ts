@@ -1,11 +1,13 @@
 import { PolicyDocument } from 'aws-lambda';
 
 interface IGenerateAuthResponseParams {
+  principalId: string;
   methodArn: string;
   effect?: 'Allow' | 'Deny';
 }
 
 interface IGeneratePolicyDocument {
+  principalId: string;
   policyDocument: PolicyDocument;
 }
 
@@ -13,9 +15,10 @@ interface IGeneratePolicyDocument {
  * https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies-examples.html 
  */
 export async function generatePolicyDocument(params: IGenerateAuthResponseParams): Promise<IGeneratePolicyDocument> {
-  const { methodArn, effect = 'Deny' } = params;
+  const { principalId, methodArn, effect = 'Deny' } = params;
 
   return {
+    principalId,
     policyDocument: {
       Version: '2012-10-17',
       Statement: [{
