@@ -19,6 +19,27 @@ Authorization: Bearer {{ACCESS_TOKEN}}
 - The data will be cached for 15s
 
 
+## Coverage
+```
+---------------------------|---------|----------|---------|---------|-------------------
+File                       | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+---------------------------|---------|----------|---------|---------|-------------------
+All files                  |   93.81 |      100 |      92 |   92.71 |
+ constants                 |     100 |      100 |     100 |     100 |
+  api.ts                   |     100 |      100 |     100 |     100 |
+ services                  |   91.86 |      100 |    87.5 |   90.14 |
+  authenticate-token.ts    |     100 |      100 |     100 |     100 |
+  policy-document.ts       |     100 |      100 |     100 |     100 |
+  query-ec2.ts             |     100 |      100 |     100 |     100 |
+  query-regions.ts         |     100 |      100 |     100 |     100 |
+  query-security-groups.ts |   81.58 |      100 |   77.78 |   77.42 | 63-74
+ utilities                 |     100 |      100 |     100 |     100 |
+  aws-credentials.ts       |     100 |      100 |     100 |     100 |
+  aws-mock-utilities.ts    |     100 |      100 |     100 |     100 |
+  environment.ts           |     100 |      100 |     100 |     100 |
+---------------------------|---------|----------|---------|---------|-------------------
+```
+
 ## TODO
 - [x] tsconfig
 - [x] base packages
@@ -48,7 +69,7 @@ Authorization: Bearer {{ACCESS_TOKEN}}
 - [x] generate test coverage
 - [x] deploy
 - [ ] set up prettier and eslint
-- [ ] demo instructions
+- [x] demo instructions
 
 ## References
 - [Getting started with the AWS SDK](https://docs.amazonaws.cn/en_us/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html)
