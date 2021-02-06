@@ -4,7 +4,6 @@ import { authenticateToken } from '../services/authenticate-token';
 import { generatePolicyDocument } from '../services/policy-document';
 
 export async function handler(event: APIGatewayTokenAuthorizerEvent, context: Context): Promise<any> {
-  console.log(event, context);
   const { authorizationToken = '', methodArn } = event;
   const [type = '', accessToken] = authorizationToken.split(/\s+/);
 
