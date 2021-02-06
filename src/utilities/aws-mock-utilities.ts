@@ -14,3 +14,28 @@ export function generateMockRegions() : AWS.EC2.RegionList {
     OptInStatus: 'opt-in-not-required'
   }));
 }
+
+export function generateMockSecurityGroup(groupId = 'Default SG'): AWS.EC2.SecurityGroup {
+  return {
+    GroupId: groupId,
+    GroupName: groupId,
+    Description: groupId,
+    IpPermissions: [],
+    OwnerId: 'random-ownerid',
+    IpPermissionsEgress: [
+      {
+        IpProtocol: '-1',
+        IpRanges: [
+            {
+              CidrIp: '0.0.0.0/0'
+            }
+        ],
+        Ipv6Ranges: [],
+        PrefixListIds: [],
+        UserIdGroupPairs: []
+      }
+    ],
+    Tags: [],
+    VpcId: 'random-vpc'
+  };
+}

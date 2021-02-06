@@ -3,7 +3,7 @@ import awsMock from 'aws-sdk-mock';
 import { generateMockRegions } from '../utilities/aws-mock-utilities';
 import { listRegions } from './query-regions';
 
-describe('this module contains lists all regions', function() {
+describe('this module lists all regions', function() {
 
   const ec2Service = 'EC2';
   const describeRegionMethodString = 'describeRegions';
@@ -47,6 +47,7 @@ describe('this module contains lists all regions', function() {
       throw new Error('Not Authorized');
     });
     expect(await listRegions()).toHaveLength(0);
+    expect(async() => await listRegions()).not.toThrow();
   });
 
   afterEach(function() {

@@ -16,7 +16,7 @@ API Gateway + Lambda
     - [x] list all regions
     - [x] add tests - list all regions
     - [x] list all security groups per region
-    - [ ] add tests - list all security groups per region
+    - [x] add tests - list all security groups per region
     - [x] list all ec2 instances and match the security group identifier to the proper security group
     - [ ] add tests - list all ec2 instances
     - [ ] add tests - match ec2 security group identifier to the proper security group
