@@ -11,12 +11,12 @@ https://kp85unh7m0.execute-api.ap-southeast-2.amazonaws.com/prod/list-ec2-sg
 ```
 {
   "sub": "1234567890",
-  "roles": "",
-  "scopes": ""
+  "role": "member",
+  "scopes": "ec2:full_read"
 }
 ```
 
-- Make a request to the [GET] endpoint and add the following headers
+- Make a request to the [GET] endpoint and add the following header
 
 ```
 Authorization: Bearer {{ACCESS_TOKEN}}
@@ -30,20 +30,27 @@ Authorization: Bearer {{ACCESS_TOKEN}}
 ---------------------------|---------|----------|---------|---------|-------------------
 File                       | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ---------------------------|---------|----------|---------|---------|-------------------
-All files                  |   93.81 |      100 |      92 |   92.71 |
+All files                  |   94.03 |    88.89 |    93.1 |   93.75 |
  constants                 |     100 |      100 |     100 |     100 |
   api.ts                   |     100 |      100 |     100 |     100 |
- services                  |   91.86 |      100 |    87.5 |   90.14 |
-  authenticate-token.ts    |     100 |      100 |     100 |     100 |
+  auth.ts                  |     100 |      100 |     100 |     100 |
+ services                  |   92.38 |    89.09 |      90 |   91.76 |
+  authenticate-token.ts    |     100 |    84.21 |     100 |     100 | 24,68
   policy-document.ts       |     100 |      100 |     100 |     100 |
-  query-ec2.ts             |     100 |      100 |     100 |     100 |
+  query-ec2.ts             |   95.45 |       90 |     100 |     100 | 25
   query-regions.ts         |     100 |      100 |     100 |     100 |
-  query-security-groups.ts |   81.58 |      100 |   77.78 |   77.42 | 63-74
- utilities                 |     100 |      100 |     100 |     100 |
-  aws-credentials.ts       |     100 |      100 |     100 |     100 |
+  query-security-groups.ts |   81.58 |    90.48 |   77.78 |   78.13 | 73-84
+ utilities                 |     100 |    88.24 |     100 |     100 |
+  aws-credentials.ts       |     100 |    66.67 |     100 |     100 | 16-17
   aws-mock-utilities.ts    |     100 |      100 |     100 |     100 |
   environment.ts           |     100 |      100 |     100 |     100 |
 ---------------------------|---------|----------|---------|---------|-------------------
+
+Test Suites: 7 passed, 7 total
+Tests:       44 passed, 44 total
+Snapshots:   0 total
+Time:        3.853 s, estimated 4 s
+
 ```
 
 ## TODO
