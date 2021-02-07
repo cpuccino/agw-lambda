@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk';
 import awsMock from 'aws-sdk-mock';
+import { NOT_AUTHORIZED_ERROR } from '../constants/error';
 import {
   generateMockSecurityGroup,
   generateMockEC2Instance,
@@ -60,7 +61,7 @@ describe('this module lists all security groups in a region', function () {
       ec2Service,
       describeSecurityGroupMethodString,
       function (callback: DescribeSecurityGroupsCallback) {
-        throw new Error('Not Authorized');
+        throw new Error(NOT_AUTHORIZED_ERROR);
       }
     );
     expect(await listSecurityGroups(region)).toHaveLength(0);

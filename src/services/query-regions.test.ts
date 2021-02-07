@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk';
 import awsMock from 'aws-sdk-mock';
+import { NOT_AUTHORIZED_ERROR } from '../constants/error';
 import {
   DescribeRegionsCallback,
   generateMockRegions
@@ -65,7 +66,7 @@ describe('this module lists all regions', function () {
       ec2Service,
       describeRegionMethodString,
       function (callback: DescribeRegionsCallback) {
-        throw new Error('Not Authorized');
+        throw new Error(NOT_AUTHORIZED_ERROR);
       }
     );
     expect(await listRegions()).toHaveLength(0);

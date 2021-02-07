@@ -1,5 +1,5 @@
 import { APIGatewayEvent, Context } from 'aws-lambda';
-import { AUTH_INVALID_SCOPES_ERROR } from '../constants/error';
+import { AUTH_INVALID_SCOPES_ERROR, GENERIC_ERROR } from '../constants/error';
 import { validateTokenAuthorization } from '../services/authenticate-token';
 import { listGlobalEC2SecurityGroups } from '../services/query-security-groups';
 import { AsyncLambdaResponse, createResponse } from '../utilities/response';
@@ -74,6 +74,6 @@ export async function handler(
     return createResponse(200, { data: securityGroups });
   } catch (e) {
     console.error(e);
-    return createResponse(500, { error: e.message || 'Something went wrong' });
+    return createResponse(500, { error: e.message || GENERIC_ERROR });
   }
 }

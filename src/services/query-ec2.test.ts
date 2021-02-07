@@ -5,6 +5,7 @@ import {
   DescribeInstanceCallback,
   generateMockEC2Instance
 } from '../utilities/aws-mock-utilities';
+import { NOT_AUTHORIZED_ERROR } from '../constants/error';
 
 describe('this module lists all EC2 instances in a region', function () {
   const region = 'ap-southeast-2';
@@ -90,7 +91,7 @@ describe('this module lists all EC2 instances in a region', function () {
       ec2Service,
       describeEC2MethodString,
       function (callback: DescribeInstanceCallback) {
-        throw new Error('Not Authorized');
+        throw new Error(NOT_AUTHORIZED_ERROR);
       }
     );
     expect(await listEC2Instances(region)).toHaveLength(0);
