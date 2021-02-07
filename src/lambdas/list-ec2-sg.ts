@@ -7,8 +7,8 @@ import { AsyncLambdaResponse, createResponse } from '../utilities/response';
 /**
  * A better way of handling this is by creating a table
  * that has information about a function / service (methodArn)
- * and it's config - (cache time, role & scopes required) 
- * 
+ * and it's config - (cache time, role & scopes required)
+ *
  * Cache security groups for 15 secs
  * or till lambda instance shuts down
  */
@@ -26,7 +26,7 @@ let cachedEC2SecurityGroups: CachedEC2SecurityGroups | null;
 /**
  * Lists all security groups attached to an EC2 instance for all regions
  * and caches it for {{maxAge}}ms
- * 
+ *
  * This route is protected and requires a valid user account
  * with the following permission / scopes
  *
@@ -40,12 +40,15 @@ export async function handler(
   event: APIGatewayEvent,
   context: Context
 ): Promise<AsyncLambdaResponse> {
-  const authorizationToken = event.headers.Authorization || event.headers.authorization || '';
-  if(!validateTokenAuthorization({ 
-    authorizationToken, 
-    scopesRequired, 
-    requireAccount
-  })) {
+  const authorizationToken =
+    event.headers.Authorization || event.headers.authorization || '';
+  if (
+    !validateTokenAuthorization({
+      authorizationToken,
+      scopesRequired,
+      requireAccount
+    })
+  ) {
     return createResponse(403, {
       message: AUTH_INVALID_SCOPES_ERROR
     });

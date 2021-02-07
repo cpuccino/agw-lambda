@@ -20,9 +20,12 @@ export interface UserAccessTokenPayload {
  *
  * @param accessToken
  */
-export function authenticateToken(authorizationToken: string): UserAccessTokenPayload | null {
+export function authenticateToken(
+  authorizationToken: string
+): UserAccessTokenPayload | null {
   const [type = '', accessToken] = authorizationToken.split(/\s+/);
-  if (type.toLowerCase() !== 'bearer' || !accessToken || !process.env.ACCESS_TOKEN_SECRET) return null;
+  if (type.toLowerCase() !== 'bearer' || !accessToken || !process.env.ACCESS_TOKEN_SECRET)
+    return null;
 
   try {
     const accessTokenPayload = verify(
@@ -41,7 +44,7 @@ export const ROLES = {
   anonymous: 'anonymous',
   member: 'member',
   owner: 'owner'
-}
+};
 
 export interface AuthorizeTokenParams {
   authorizationToken: string;
@@ -52,29 +55,32 @@ export interface AuthorizeTokenParams {
 /**
  * Validates that the provided authorization token contains
  * the proper role and scopes
- * 
+ *
  * If an account is required, and the token role is anonymous
  * or if the token doesn't have "ALL" the scopes required
  * validation fails
- * 
- * @param params 
+ *
+ * @param params
  */
 export function validateTokenAuthorization(params: AuthorizeTokenParams): boolean {
   const { authorizationToken, requireAccount, scopesRequired } = params;
 
   const userAccessTokenPayload = authenticateToken(authorizationToken);
-  if(!userAccessTokenPayload) return false;
-  
-  const { role = '', scopes = '' } = userAccessTokenPayload;
-  
-  const scopesRequiredArray = scopesRequired.split(',').map(s => s.toLowerCase().trim()).filter(s => s);
-  const userScopesArray =scopes.split(',').map(s => s.toLowerCase().trim());
-  
-  if(requireAccount && (!role || role.toLowerCase() === ROLES.anonymous)) return false;
+  if (!userAccessTokenPayload) return false;
 
-  for(const scopeRequired of scopesRequiredArray) {
-    if(!userScopesArray.includes(scopeRequired)) return false;
+  const { role = '', scopes = '' } = userAccessTokenPayload;
+
+  const scopesRequiredArray = scopesRequired
+    .split(',')
+    .map(s => s.toLowerCase().trim())
+    .filter(s => s);
+  const userScopesArray = scopes.split(',').map(s => s.toLowerCase().trim());
+
+  if (requireAccount && (!role || role.toLowerCase() === ROLES.anonymous)) return false;
+
+  for (const scopeRequired of scopesRequiredArray) {
+    if (!userScopesArray.includes(scopeRequired)) return false;
   }
-  
+
   return true;
 }
