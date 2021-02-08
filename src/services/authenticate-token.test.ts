@@ -228,4 +228,31 @@ describe('This module performs authorization to the access token and decodes the
       })
     ).toBe(false);
   });
+
+  it('should fail authorization if the role & scopes contained in the token is not of type string', function () {
+    expect(
+      validateTokenAuthorization({
+        requireAccount: true,
+        authorizationToken:
+          BEARER_TOKEN +
+          ' ' +
+          sign(
+            { ...baseUserPayload, scopes: 'ec2:full_read', role: 0 },
+            process.env.ACCESS_TOKEN_SECRET || ''
+          ),
+        scopesRequired: 'ec2:full_read,ec2:full_write'
+      })
+    ).toBe(false);
+
+    expect(
+      validateTokenAuthorization({
+        requireAccount: true,
+        authorizationToken:
+          BEARER_TOKEN +
+          ' ' +
+          sign({ ...baseUserPayload, scopes: 0 }, process.env.ACCESS_TOKEN_SECRET || ''),
+        scopesRequired: 'ec2:full_read,ec2:full_write'
+      })
+    ).toBe(false);
+  });
 });

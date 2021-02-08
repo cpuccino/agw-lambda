@@ -70,11 +70,17 @@ export function validateTokenAuthorization(params: AuthorizeTokenParams): boolea
 
   const { role = '', scopes = '' } = userAccessTokenPayload;
 
+  if (typeof role !== 'string' || typeof scopes !== 'string') return false;
+
   const scopesRequiredArray = scopesRequired
     .split(',')
     .map(s => s.toLowerCase().trim())
     .filter(s => s);
-  const userScopesArray = scopes.split(',').map(s => s.toLowerCase().trim());
+
+  const userScopesArray = scopes
+    .split(',')
+    .map(s => s.toLowerCase().trim())
+    .filter(s => s);
 
   if (requireAccount && (!role || role.toLowerCase() === ROLES.anonymous)) return false;
 
