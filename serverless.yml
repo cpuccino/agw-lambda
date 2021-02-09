@@ -14,8 +14,8 @@ functions:
   list-ec2-sg:
     role: EC2FullReadAccessRole # We can either create a role or reference an existing one
     handler: 'src/handlers/list-ec2-sg.handler'
-    memorySize: 1024
-    timeout: 30
+    memorySize: 256
+    timeout: 20
     events:
       - http:
           method: GET
@@ -59,21 +59,21 @@ resources:
                 - Effect: Allow
                   Action:
                     - ec2:Describe*
-                  Resource: "*"
+                  Resource: '*'
                 - Effect: Allow
                   Action:
                     - elasticloadbalancing:Describe*
-                  Resource: list-ec2-sg
+                  Resource: '*'
                 - Effect: Allow
                   Action:
                     - cloudwatch:ListMetrics
                     - cloudwatch:GetMetricStatistics
                     - cloudwatch:Describe*
-                  Resource: "*"
+                  Resource: '*'
                 - Effect: Allow
                   Action:
                     - autoscaling:Describe*
-                  Resource: "*"
+                  Resource: '*'
 
                 # Enable cloudwatch logs
                 - Effect: Allow
@@ -81,4 +81,4 @@ resources:
                     - s3:PutObject
                     - logs:CreateLogStream
                     - logs:PutLogEvents
-                  Resource: "*"
+                  Resource: '*'

@@ -53,11 +53,11 @@ export interface CreateEC2SecurityGroupParams {
 
 /**
  * TODO: Create definitions for ipPermissions & ipPermissionsEgress
- * 
+ *
  * Formats the security group to also include information about the region
  * and it's instances
- * 
- * @param params 
+ *
+ * @param params
  */
 function createEC2SecurityGroup(params: CreateEC2SecurityGroupParams): EC2SecurityGroup {
   const { region, instances, securityGroup } = params;
@@ -70,7 +70,7 @@ function createEC2SecurityGroup(params: CreateEC2SecurityGroupParams): EC2Securi
     tags: (securityGroup.Tags || []).map(t => ({ key: t.Key, value: t.Value })),
     instances,
     vpcId: securityGroup.VpcId
-  }
+  };
 }
 
 /**
@@ -80,9 +80,7 @@ function createEC2SecurityGroup(params: CreateEC2SecurityGroupParams): EC2Securi
  *
  * @param region
  */
-export async function listEC2SecurityGroups(
-  region: string
-): Promise<EC2SecurityGroup[]> {
+export async function listEC2SecurityGroups(region: string): Promise<EC2SecurityGroup[]> {
   if (!region) return [];
 
   const [ec2Instances, securityGroups] = await Promise.all([
@@ -93,20 +91,23 @@ export async function listEC2SecurityGroups(
 
   const ec2SecurityGroups: EC2SecurityGroup[] = [];
 
-  for(const securityGroup of securityGroups) {
-    const securityGroupInstances = ec2Instances
-      .filter(instance => 
-        instance.SecurityGroups && 
-        instance.SecurityGroups.length && 
+  for (const securityGroup of securityGroups) {
+    const securityGroupInstances = ec2Instances.filter(
+      instance =>
+        instance.SecurityGroups &&
+        instance.SecurityGroups.length &&
         instance.SecurityGroups.find(sg => sg.GroupId === securityGroup.GroupId)
-      );
+    );
 
-    ec2SecurityGroups.push(createEC2SecurityGroup({
-      region,
-      instances: securityGroupInstances
-        .map(sgi => sgi.InstanceId || '').filter(sgid => sgid),
-      securityGroup
-    }));
+    ec2SecurityGroups.push(
+      createEC2SecurityGroup({
+        region,
+        instances: securityGroupInstances
+          .map(sgi => sgi.InstanceId || '')
+          .filter(sgid => sgid),
+        securityGroup
+      })
+    );
   }
 
   return ec2SecurityGroups.filter(sg => (sg.instances || []).length);

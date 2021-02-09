@@ -6,7 +6,7 @@ export const DEFAULT_HEADERS = {
 };
 
 export interface AsyncLambdaResponseHeaders {
-  [name: string]: string | boolean;
+  [name: string]: string | number | boolean;
 }
 
 export interface AsyncLambdaResponse {
@@ -27,14 +27,14 @@ export interface JsonApiResourceRelation {
 /**
  * https://jsonapi.org/format/#document-resource-objects
  * JSON Format v1.0
- * 
+ *
  * {
  *  "id": "",
  *  "attributes": {},
  *  "type": {}
  *  "relationships":{}
  * }
- * 
+ *
  */
 export interface JsonApiResource<T> {
   id?: string;
@@ -43,7 +43,7 @@ export interface JsonApiResource<T> {
   relationships?: {
     [key: string]: {
       data: JsonApiResourceRelation | JsonApiResourceRelation[];
-    }
+    };
   };
 }
 

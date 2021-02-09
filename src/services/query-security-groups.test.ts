@@ -2,8 +2,15 @@ import AWS from 'aws-sdk';
 import awsMock from 'aws-sdk-mock';
 import { NOT_AUTHORIZED_ERROR } from '../constants/error';
 import { listEC2SecurityGroups, listSecurityGroups } from './query-security-groups';
-import { DescribeInstanceCallback, generateMockEC2Instance, generateMockSecurityGroupIdentifier } from './__mocks__/mock-ec2';
-import { DescribeSecurityGroupsCallback, generateMockSecurityGroup } from './__mocks__/mock-security-group';
+import {
+  DescribeInstanceCallback,
+  generateMockEC2Instance,
+  generateMockSecurityGroupIdentifier
+} from './__mocks__/mock-ec2';
+import {
+  DescribeSecurityGroupsCallback,
+  generateMockSecurityGroup
+} from './__mocks__/mock-security-group';
 
 describe('this module lists all security groups in a region', function () {
   const region = 'ap-southeast-2';

@@ -2,7 +2,11 @@ import { APIGatewayEvent, Context } from 'aws-lambda';
 import { AUTH_INVALID_SCOPES_ERROR, GENERIC_ERROR } from '../constants/error';
 import { validateTokenAuthorization } from '../services/authenticate-token';
 import { listGlobalEC2SecurityGroups } from '../services/query-security-groups';
-import { AsyncLambdaResponse, createResponse, JsonApiResource } from '../utilities/response';
+import {
+  AsyncLambdaResponse,
+  createResponse,
+  JsonApiResource
+} from '../utilities/response';
 import { EC2SecurityGroup } from '../services/query-security-groups';
 import { AWS_EC2, AWS_SECURITY_GROUP, AWS_VPC } from '../constants/resource-types';
 
@@ -28,11 +32,13 @@ let cachedEC2SecurityGroups: CachedEC2SecurityGroups | null;
 /**
  * Formats a security group array to JSON:API v1.0 format
  * https://jsonapi.org/format/
- * 
- * @param securityGroups 
+ *
+ * @param securityGroups
  */
-function createEC2SecurityGroupsResponse(securityGroups: EC2SecurityGroup[]): JsonApiResource<EC2SecurityGroup>[] {
-  return securityGroups.map(function(securityGroup) {
+function createEC2SecurityGroupsResponse(
+  securityGroups: EC2SecurityGroup[]
+): JsonApiResource<EC2SecurityGroup>[] {
+  return securityGroups.map(function (securityGroup) {
     const { vpcId, instances = [], ...securityGroupAttributes } = securityGroup;
 
     return {
@@ -40,18 +46,17 @@ function createEC2SecurityGroupsResponse(securityGroups: EC2SecurityGroup[]): Js
       type: AWS_SECURITY_GROUP,
       region: securityGroup.region,
       relationships: {
-        vpc: { 
-          data: { 
-            id: vpcId, 
+        vpc: {
+          data: {
+            id: vpcId,
             type: AWS_VPC
-          } 
+          }
         },
-        instance: { 
-          data: instances
-            .map(ec2 => ({ 
-              id: ec2, 
-              type: AWS_EC2 
-            }))
+        instances: {
+          data: instances.map(ec2 => ({
+            id: ec2,
+            type: AWS_EC2
+          }))
         }
       },
       attributes: securityGroupAttributes
@@ -68,9 +73,12 @@ function createEC2SecurityGroupsResponse(securityGroups: EC2SecurityGroup[]): Js
  *
  * For production, we can further improve the performance of our describe:* calls to the aws api
  * by caching the response in a database / data store / memory
- * 
+ *
  * We should also implement pagination especially
  * when working with larger sets of data - page & limit
+ * 
+ * We can also further implement JSON:API responsibilities mentioned below
+ * https://jsonapi.org/format/1.0/#content-negotiation-servers
  *
  * @param event
  * @param context
@@ -89,7 +97,7 @@ export async function handler(
     })
   ) {
     return createResponse(403, {
-      message: AUTH_INVALID_SCOPES_ERROR
+      error: AUTH_INVALID_SCOPES_ERROR
     });
   }
 
@@ -101,6 +109,7 @@ export async function handler(
       200,
       { data: cachedEC2SecurityGroups },
       {
+        'Content-Type': 'application/vnd.api+json',
         'Expires-In': cachedEC2SecurityGroups.expiresIn.toString()
       }
     );
@@ -110,12 +119,17 @@ export async function handler(
     const securityGroups = await listGlobalEC2SecurityGroups();
     const ec2SecurityGroupsResponse = createEC2SecurityGroupsResponse(securityGroups);
 
+    const cachedEC2SecurityGroupsExpiration = new Date().getTime() + maxAge;
+
     cachedEC2SecurityGroups = {
       securityGroups: ec2SecurityGroupsResponse,
-      expiresIn: new Date().getTime() + maxAge
+      expiresIn: cachedEC2SecurityGroupsExpiration
     };
 
-    return createResponse(200, { data: ec2SecurityGroupsResponse });
+    return createResponse(200, { data: ec2SecurityGroupsResponse }, {
+      'Content-Type': 'application/vnd.api+json',
+      'Expires-In': cachedEC2SecurityGroupsExpiration
+    });
   } catch (e) {
     console.error(e);
     return createResponse(500, { error: e.message || GENERIC_ERROR });

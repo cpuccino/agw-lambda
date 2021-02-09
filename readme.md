@@ -82,7 +82,7 @@ Time:        3.853 s, estimated 4 s
 - [x] cache expensive handler call - list-ec2-sg
 - [x] generate test coverage
 - [x] deploy
-- [x] json:api v.1 response 
+- [x] json:api v.1 response
 - [x] set up prettier and eslint
 - [x] demo instructions
 
