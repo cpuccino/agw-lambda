@@ -24,6 +24,11 @@ Authorization: Bearer {{ACCESS_TOKEN}}
 
 - The data will be cached for 15s
 
+## Info
+
+- node v12.18.4
+- npm 6.14.6
+
 ## Coverage
 
 ```
