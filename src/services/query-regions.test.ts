@@ -1,11 +1,11 @@
 import AWS from 'aws-sdk';
 import awsMock from 'aws-sdk-mock';
 import { NOT_AUTHORIZED_ERROR } from '../constants/error';
+import { listRegions } from './query-regions';
 import {
   DescribeRegionsCallback,
   generateMockRegions
-} from '../utilities/aws-mock-utilities';
-import { listRegions } from './query-regions';
+} from './__mocks__/mock-regions';
 
 describe('this module lists all regions', function () {
   const ec2Service = 'EC2';

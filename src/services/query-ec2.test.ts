@@ -1,11 +1,11 @@
 import AWS from 'aws-sdk';
 import awsMock from 'aws-sdk-mock';
 import { listEC2Instances } from './query-ec2';
+import { NOT_AUTHORIZED_ERROR } from '../constants/error';
 import {
   DescribeInstanceCallback,
   generateMockEC2Instance
-} from '../utilities/aws-mock-utilities';
-import { NOT_AUTHORIZED_ERROR } from '../constants/error';
+} from './__mocks__/mock-ec2';
 
 describe('this module lists all EC2 instances in a region', function () {
   const region = 'ap-southeast-2';

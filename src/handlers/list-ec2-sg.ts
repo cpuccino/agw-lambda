@@ -32,6 +32,9 @@ let cachedEC2SecurityGroups: CachedEC2SecurityGroups | null;
  *
  * For production, we can further improve the performance of our describe:* calls to the aws api
  * by caching the response in a database / data store / memory
+ * 
+ * We should also implement pagination especially
+ * when working with larger sets of data - page & limit
  *
  * @param event
  * @param context

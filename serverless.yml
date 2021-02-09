@@ -10,10 +10,10 @@ provider:
 
 functions:
   authorizer:
-    handler: 'src/lambdas/authorizer.handler'
+    handler: 'src/handlers/authorizer.handler'
   list-ec2-sg:
     role: EC2FullReadAccessRole # We can either create a role or reference an existing one
-    handler: 'src/lambdas/list-ec2-sg.handler'
+    handler: 'src/handlers/list-ec2-sg.handler'
     memorySize: 1024
     timeout: 30
     events:
@@ -55,18 +55,30 @@ resources:
             PolicyDocument:
               Version: '2012-10-17'
               Statement:
+                # arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess
                 - Effect: Allow
                   Action:
-                    # Describe EC2
                     - ec2:Describe*
+                  Resource: "*"
+                - Effect: Allow
+                  Action:
                     - elasticloadbalancing:Describe*
-                    - cloudwatch:GetMetricStatistics
+                  Resource: list-ec2-sg
+                - Effect: Allow
+                  Action:
                     - cloudwatch:ListMetrics
+                    - cloudwatch:GetMetricStatistics
                     - cloudwatch:Describe*
+                  Resource: "*"
+                - Effect: Allow
+                  Action:
                     - autoscaling:Describe*
+                  Resource: "*"
 
-                    # Cloudwatch
+                # Enable cloudwatch logs
+                - Effect: Allow
+                  Action:
                     - s3:PutObject
                     - logs:CreateLogStream
                     - logs:PutLogEvents
-                  Resource: '*'
+                  Resource: "*"

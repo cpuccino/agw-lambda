@@ -20,6 +20,25 @@ export interface ResponseBody<T> {
 }
 
 /**
+ * https://jsonapi.org/format/#document-resource-objects
+ * JSON Format v1.0
+ * 
+ * {
+ *  "id": "",
+ *  "attributes": {},
+ *  "type": {}
+ *  "relationships":{}
+ * }
+ * 
+ */
+export interface JSONApi<T, U> {
+  id: string;
+  attributes: T;
+  type: string;
+  relationships: U;
+}
+
+/**
  * Generates a standardized lambda response
  *
  * @param statusCode
