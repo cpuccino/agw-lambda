@@ -107,7 +107,7 @@ export async function handler(
   ) {
     return createResponse(
       200,
-      { data: cachedEC2SecurityGroups },
+      { data: cachedEC2SecurityGroups.securityGroups },
       {
         'Content-Type': 'application/vnd.api+json',
         'Expires-In': cachedEC2SecurityGroups.expiresIn.toString()
