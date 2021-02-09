@@ -76,7 +76,7 @@ function createEC2SecurityGroupsResponse(
  *
  * We should also implement pagination especially
  * when working with larger sets of data - page & limit
- * 
+ *
  * We can also further implement JSON:API responsibilities mentioned below
  * https://jsonapi.org/format/1.0/#content-negotiation-servers
  *
@@ -126,10 +126,14 @@ export async function handler(
       expiresIn: cachedEC2SecurityGroupsExpiration
     };
 
-    return createResponse(200, { data: ec2SecurityGroupsResponse }, {
-      'Content-Type': 'application/vnd.api+json',
-      'Expires-In': cachedEC2SecurityGroupsExpiration
-    });
+    return createResponse(
+      200,
+      { data: ec2SecurityGroupsResponse },
+      {
+        'Content-Type': 'application/vnd.api+json',
+        'Expires-In': cachedEC2SecurityGroupsExpiration
+      }
+    );
   } catch (e) {
     console.error(e);
     return createResponse(500, { error: e.message || GENERIC_ERROR });
