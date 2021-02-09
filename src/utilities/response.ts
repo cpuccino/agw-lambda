@@ -19,6 +19,11 @@ export interface ResponseBody<T> {
   [key: string]: T;
 }
 
+export interface JsonApiResourceRelation {
+  id?: string;
+  type?: string;
+}
+
 /**
  * https://jsonapi.org/format/#document-resource-objects
  * JSON Format v1.0
@@ -31,11 +36,15 @@ export interface ResponseBody<T> {
  * }
  * 
  */
-export interface JSONApi<T, U> {
-  id: string;
+export interface JsonApiResource<T> {
+  id?: string;
+  type?: string;
   attributes: T;
-  type: string;
-  relationships: U;
+  relationships?: {
+    [key: string]: {
+      data: JsonApiResourceRelation | JsonApiResourceRelation[];
+    }
+  };
 }
 
 /**
